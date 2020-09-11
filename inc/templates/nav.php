@@ -6,9 +6,25 @@
 <div style="border-bottom: 1px solid; border-color:#eee; padding-bottom: 30px; margin-bottom:30px;">
 <div class="float-left">
     <p>
-         <a href="index.php?task=report">All Students</a> |
-         <a href="index.php?task=add">Add New Student</a> |
+         <a href="index.php?task=report">All Students</a>
+         <?php
+        if( hasPrivilege()):
+        ?>
+        |
+         <a href="index.php?task=add">Add New Student</a>
+        <?php
+          endif;
+        ?>
+
+         <?php
+             if(isAdmin()):
+         ?>
+         |
          <a href="index.php?task=seed">Seed</a>
+         <?php
+              endif;
+         ?>
+    </p>
 </div>
 <div class="float-right">
         <?php

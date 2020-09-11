@@ -36,35 +36,6 @@ if (isset($_GET['logout'])) {
 
 }
 
-/////////////
-// $username = filter_input( INPUT_POST, 'username', FILTER_SANITIZE_STRING );
-// $password = filter_input( INPUT_POST, 'password', FILTER_SANITIZE_STRING );
-// $fp       = fopen( "data\\users.txt", "r" );
-// if ( $username && $password ) {
-// 	$_SESSION['loggedin'] = false;
-// 	$_SESSION['user'] = false;
-// 	while ( $data = fgetcsv( $fp ) ) {
-// 		if ( $data[0] == $username && $data[1] == sha1( $password ) ) {
-// 			$_SESSION['loggedin'] = true;
-// 			$_SESSION['user'] = $username;
-// 			header('location:index.php');
-// 		}
-// 	}
-// 	if(!$_SESSION['loggedin']) {
-// 		$error = true;
-// 	}
-// }
-
-
-// if ( isset( $_GET['logout'] ) ) {
-// 	$_SESSION['loggedin'] = false;
-// 	$_SESSION['user'] = false;
-// 	//$_SESSION['role'] = false;
-// 	session_destroy();
-// 	header('location:index.php');
-// }
-
-
 ?>
 
 <!DOCTYPE html>

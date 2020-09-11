@@ -1,4 +1,9 @@
 <?php
+//session_start();
+
+?>
+
+<?php
 define('DB_NAME', 'data\\db.txt');
 function seed()
 {
@@ -54,18 +59,31 @@ function generateReport()
     <tr>
         <th>Name</th>
         <th>Roll</th>
+        <?php
+if (isAdmin() || isEditor()):
+    ?>
         <th width="25%">Action</th>
+        <?php
+endif;
+    ?>
     </tr>
     <?php
 foreach ($students as $student) {
         ?>
     <tr>
+
     <td><?php printf("%s %s", $student['fname'], $student['lname']);?> </td>
     <td><?php printf("%s", $student['roll']);?> </td>
-    <td><?php printf('<a href="index.php?task=edit&id=%s">Edit</a> | <a class="delete" href="index.php?task=delete&id=%s">Delete</a> ', $student['id'], $student['id']); ?> </td>
+    <?php if (isAdmin()): ?>
+    <td><?php printf('<a href="index.php?task=edit&id=%s">Edit</a> | <a class="delete" href="index.php?task=delete&id=%s">Delete</a> ', $student['id'], $student['id']);?> </td>
+    <?php elseif (isEditor()): ?>
+    <td><?php printf('<a href="index.php?task=edit&id=%s">Edit</a> ', $student['id']);?> </td>
+    <?php endif;?>
     </tr>
 
-   <?php } ?>
+   <?php
+}
+    ?>
 
     </table>
 
@@ -142,9 +160,9 @@ function deleteStudent($id)
     $serializedData = file_get_contents(DB_NAME);
     $students = unserialize($serializedData);
 
-    foreach($students as $offset=>$student){
-        if($student['id'] == $id){
-           unset($students[$offset]);
+    foreach ($students as $offset => $student) {
+        if ($student['id'] == $id) {
+            unset($students[$offset]);
         }
     }
     //unset($students[$id-1]);
@@ -153,17 +171,33 @@ function deleteStudent($id)
     file_put_contents(DB_NAME, $serializedData, LOCK_EX);
 }
 
-function printRaw(){
-      $serializedData = file_get_contents(DB_NAME);
-      $students = unserialize($serializedData);
+function printRaw()
+{
+    $serializedData = file_get_contents(DB_NAME);
+    $students = unserialize($serializedData);
 
-      print_r($students);
+    print_r($students);
 }
 
-function getNewId($students){
+function getNewId($students)
+{
     $maxId = max(array_column($students, 'id'));
     return $maxId + 1;
 }
 
+function isAdmin()
+{
+    $_SESSION["role"] = $_SESSION["role"] ?? '';
+    return ('admin' == $_SESSION['role']);
+}
 
-?>
+function isEditor()
+{
+    $_SESSION["role"] = $_SESSION["role"] ?? '';
+    return ('editor' == $_SESSION['role']);
+}
+
+function hasPrivilege()
+{
+    return (isAdmin() || isEditor());
+}
