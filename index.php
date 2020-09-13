@@ -1,5 +1,4 @@
 <?php
-
 require_once "inc\\functions.php";
 $info = '';
 $task = $_GET['task'] ?? 'report';
@@ -10,10 +9,11 @@ if ('edit' == $task) {
         header('location:index.php?task=report');
     }
 }
-if ('delete' == $task) {
+
+if ('delete'==$task) {
     if (!isAdmin()) {
         header('location:index.php?task=report');
-        //return;
+        return;
     }
 
     $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING);
@@ -27,7 +27,6 @@ if ('seed' == $task) {
         header('location:index.php?task=report');
         return;
     }
-
     seed();
     $info = "Seeding is complete";
 }
@@ -147,21 +146,21 @@ if ($info != '') {
     $student = getStudent($id);
     if ($student):
     ?>
-					<div class="row">
-					  <div class="column column-60 column-offset-20">
-					    <form method="POST">
-					      <input type="hidden" value="<?php echo $id; ?>" name="id">
-					      <label for="fname">First Name</label>
-					      <input type="text" name="fname" id="fname" value="<?php echo $student['fname']; ?>">
-					      <label for="lname">Last Name</label>
-					      <input type="text" name="lname" id="lname" value="<?php echo $student['lname']; ?>">
-					      <label for="roll">Roll</label>
-					      <input type="number" name="roll" id="roll" value="<?php echo $student['roll']; ?>">
-					      <button type="submit" class="button-primary" name="submit">Update</button>
-					    </form>
-					  </div>
-					</div>
-					<?php
+						<div class="row">
+						  <div class="column column-60 column-offset-20">
+						    <form method="POST">
+						      <input type="hidden" value="<?php echo $id; ?>" name="id">
+						      <label for="fname">First Name</label>
+						      <input type="text" name="fname" id="fname" value="<?php echo $student['fname']; ?>">
+						      <label for="lname">Last Name</label>
+						      <input type="text" name="lname" id="lname" value="<?php echo $student['lname']; ?>">
+						      <label for="roll">Roll</label>
+						      <input type="number" name="roll" id="roll" value="<?php echo $student['roll']; ?>">
+						      <button type="submit" class="button-primary" name="submit">Update</button>
+						    </form>
+						  </div>
+						</div>
+						<?php
 endif;
 endif;
 ?>

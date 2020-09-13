@@ -1,5 +1,4 @@
 <?php
-  session_start();
   $_SESSION["loggedin"] =  $_SESSION["loggedin"] ?? '';
 
 ?>
@@ -8,7 +7,7 @@
     <p>
          <a href="index.php?task=report">All Students</a>
          <?php
-        if( hasPrivilege()):
+        if(hasPrivilege()):
         ?>
         |
          <a href="index.php?task=add">Add New Student</a>

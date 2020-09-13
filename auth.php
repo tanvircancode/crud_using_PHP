@@ -18,7 +18,6 @@ if ($username && $password) {
             $_SESSION['loggedin'] = true;
             $_SESSION['user'] = $username;
             $_SESSION['role'] = $data[2];
-
             header('location:index.php');
         }
     }
